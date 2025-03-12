@@ -11,12 +11,12 @@ meme <- image_read(url) %>%
   image_scale(512) %>%
   image_annotate(text = paste("WHEN YOU GO TO STATS 220"),
                    color = "#FFFFFF",
-                   size = 48,
+                   size = 42,
                    font = "Impact",
                    gravity="north") %>%
   image_annotate(text = paste("AND THERE'S NO WIFI"),
                      color = "#FFFFFF",
-                     size = 48,
+                     size = 42,
                      font = "Impact",
                      gravity = "south")
 
