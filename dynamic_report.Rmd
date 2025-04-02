@@ -1,0 +1,142 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width = 7, fig.height = 4)
+library(tidyverse)
+```
+
+```{css}
+body {
+  font-family: Arial;
+}
+
+p {
+  text-align: justify;
+}
+
+strong {
+  color: #101010;
+}
+```
+
+## What's happening in my emails?
+
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJTfkbSDaOgzplSQulCkgc1H5xJ2n5VnVDk1qzgsiYQRoJr0NHKQ2B5JX77orBEXK3J0wImxTUfRSf/pub?gid=916532695&single=true&output=csv"
+logged_data <- read_csv(url)
+latest_data <- logged_data %>%
+  rename(timestamp = 1,
+         category = 2,
+         email_read = 3,
+         email_reply = 4,
+         time_to_view = 5,
+         deleted = 6,
+         inbox_size = 7) %>%
+  mutate(category = str_replace(category, "\\(eg. Password Reset, Email Confirmation, Two Factor Authentication \\)", ""))
+```
+
+Throughout each and every day, I receive a flurry of notifications on my phone from my Gmail app. I have received yet another email. This constant flow of attention grabbing notifications has led to me zoning out every time I receive an email. Usually, I navigate to a point where I am able to delete this email before I have even truly considered what this email contained and why I was being sent it. As a result, I am investigating my email inbox, the emails I receive, and what I do with these. I created a simple Google form, where I can enter some brief information about an email, and how I behaved upon receiving it. Whenever I finished an email-receiving routine, I filled in this form with the corresponding information. 
+
+There are several key ideas that I wanted to investigate:
+
+### Email Types
+
+```{r}
+# summary values for email types
+num_categories <- latest_data %>%
+  distinct(category) %>%
+  nrow()
+```
+
+*Question*: What category of email would you say best fits this email?
+
+This question was of multiple choice form with 6 given options, but also included a 7th other option where the user can give an unspecified category if the email is not one of the 6 given. Given answers cover **`r num_categories` different categories**. These you will see displayed below:
+
+```{r}
+ggplot(data = latest_data) + 
+  geom_bar(aes(x = category)) +
+  labs(title = "Categories of Emails",
+       x = "Categories",
+       y = "Number of Emails")
+```
+
+### Behaviour as an Email is received
+
+```{r}
+# behaviour summary values
+number_of_emails <- latest_data %>% 
+  select(email_read) %>% 
+  summarise(n())
+
+number_emails_read <- latest_data %>%
+  filter(str_detect(email_read, "Yes")) %>%
+  summarise(n())
+
+number_emails_replied <- latest_data %>%
+  filter(str_detect(email_reply, "Yes")) %>%
+  summarise(n())
+
+mean_view_time <- latest_data$time_to_view %>%
+  mean(na.rm = TRUE) %>%
+  as.numeric(units = "mins") %>%
+  round(2)
+```
+
+*Question*: Did you read the contents of the email?
+
+*Question*: Did you/will you reply to this email at any point in the foreseeable future?
+
+*Question*: How long did it take for you to view this email?
+
+These questions were written in order to get insights into what I do when I receive an email. Do I actually read the contents? Will I actually reply? How long did it take me to get around to dealing with the email? Of the `r number_of_emails` emails received, the contents of **`r number_emails_read` emails were read**, and **`r number_emails_replied` emails were replied to**. The average amount of time to view an email was **`r mean_view_time` minutes**.
+
+```{r}
+ggplot(data = latest_data) + 
+  geom_bar(aes(x = email_read,
+               fill = email_reply)) +
+  labs(title = "Read Status of Emails",
+       x = "Email Read Status",
+       y = "Number of Emails")
+
+ggplot(data = latest_data) +
+  geom_bar(aes(x = time_to_view)) +
+  labs(title = "Time to View each Email",
+       x = "Time to View",
+       y = " Number of Emails")
+```
+
+### Behaviour after an Email is received
+
+```{r}
+# summary values for after receiving
+num_emails_deleted <- latest_data %>%
+  filter(str_detect(deleted, "Yes")) %>%
+  summarise(n())
+
+min_inbox_size <- latest_data$inbox_size %>%
+  min(na.rm = TRUE) %>%
+  round(2)
+
+max_inbox_size <- latest_data$inbox_size %>%
+  max(na.rm = TRUE) %>%
+  round(2)
+```
+
+*Question*: Did you delete this email?
+
+*Question*: How many emails do you currently have in your inbox?
+
+These questions were included to determine what happens to emails once I have viewed them. Do I delete them? How many emails do I not delete and leave in the inbox? Of the `r number_of_emails` emails received, **`r num_emails_deleted` emails were deleted** upon receival. The minimum and maximum number of emails in my inbox at any one time were **`r min_inbox_size`** emails and **`r max_inbox_size`** emails respectively.
+
+```{r}
+ggplot(data = latest_data) + 
+  geom_bar(aes(x = deleted,
+               fill = category)) +
+  labs(title = "Were Emails Deleted?",
+       x = "Deletion Status",
+       y = "Number of Emails")
+```
