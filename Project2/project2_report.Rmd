@@ -1,0 +1,39 @@
+---
+title: "Project 2"
+author: "Mikai Somerville"
+subtitle: "STATS 220 Semester One 2025"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+## Introduction
+
+The focus of my data collection was to learn more about how I interact with emails, and what emails I receive. Everyday I receive a countless number of emails which I can easily lose track of. By collecting data about the emails I receive and how I interact with them, I am able to discover insights about how people and organisations purposefully contact me through email. Everytime that I received an email, I filled out the [Google Form](https://forms.gle/rsjB7nUNLc8EMZk87) I built. This meant that I could log information everytime that I observed an email being sent in.
+
+When designing the [Google Form](https://forms.gle/rsjB7nUNLc8EMZk87), there were several guidelines that I followed. One of these was called Guideline 4 in the STATS 220 coursebook: Use validation rules for responses. This guideline is followed for the benefit of the user, by ensuring that all valid or invalid responses are clearly communicated to the user, so that they can easily alter their input to match the expectations. When analysing the data afterwards, it ensures that the process is as simple as possible as there is little clean-up required. In order to follow this guideline, I implemented simple regex into the question "How many emails do you currently have in your inbox?". This question required a whole number positive response, and since this cannot be completed with the simple response validation included in Google Forms, I implemented a simple regex for this. Along with this, I also included a clear and concise error message if a response was invalid: "Invalid Response, Please enter a positive whole number". In the question "How long did it take for you to view this email?", I used a time duration question format, to ensure that the user can clearly pick a unit of time from their choice to suit their circumstance. In this format, all responses are valididated automatically to fit the time data format. 
+
+From the data collected, I can learn several things upon analysis. There are three main areas that I am collecting data about: what type of email was received, the behaviour of the user when they receive the email, and their behaviour after they received the email. By getting the category of each email, we are able to learn about how email is used, from marketing ploys to deeply personal conversations. The behaviour of a user when receiving an email tells us about whether they find any value in the email they received, and how much urgency they then feel based on the importance of the email. After receiving an email, we can determine their typical behaviour from their inbox size, and from there determine how they felt about the email based on whether they deleted it.
+
+[Click here to view the Google Form](https://forms.gle/rsjB7nUNLc8EMZk87)
+
+## Dynamic Report
+
+[Link to my Dynamic Report](https://mikais13.github.io/stats220/)
+
+## Creativity
+
+I have applied creativity in mulitple ways. One of which is the implementation of regex in my Google Form response validation. Although the concept was introduced in class, I went beyond this and learnt more about regular expressions to implement validation for my final question. This validation went further than what is capable in Google Forms to ensure that the user has the best experience possible, and the data analysis was as simple as possible. 
+
+## Learning Reflection
+
+From this project, I have learnt a lot about how dynamic data can be analysed. Knowing that the size of the data your working with can and will change is a significant mindset shift from static data that you can already play with beforehand. Remembering to reference summary variables rather than creating a one time calculation is quite unnatural. Normally given a dataset, you could simply count the number of rows once and just write that value when discussing the data. Whereas with dynamic data, you must create summary variables that fetch this value from the dataset, then reference this each time. This feels quite unnatural at first, and was the most significant takeaway I took from the project. I am excited to learn more about how we can use dynamic data, specifically when combined with APIs and the rich data that we can fetch from external sources through their APIs. By utilising APIs, we should be able to worry less about the data collection process and focus on the data analysis with precleaned and rich data sourced from the API.
+
+## Appendix
+
+```{r file='exploration.R', eval=FALSE, echo=TRUE}
+
+```
+```{r file='dynamic_report.Rmd', eval=FALSE, echo=TRUE}
+
+```
