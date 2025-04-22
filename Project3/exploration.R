@@ -28,3 +28,26 @@ selected_photos <- photo_data %>%
 glimpse(selected_photos)
 
 write_csv(selected_photos, "selected_photos.csv")
+
+
+num_images_with_bunny <- selected_photos$contains_bunny %>% sum()
+num_images_with_bunny
+
+mean_area <- selected_photos$area %>% mean(na.rm = TRUE)
+mean_area
+
+num_portrait <- selected_photos$natural_orientation %>%
+  str_detect("Portrait") %>%
+  sum()
+num_portrait
+
+
+orientation_counts <- selected_photos %>%
+  group_by(natural_orientation) %>%
+  summarise(count = n())
+orientation_counts
+
+mean_area_by_orientation <- selected_photos %>%
+  group_by(natural_orientation) %>%
+  summarise(mean_area = mean(area, na.rm = TRUE) %>% round())
+mean_area_by_orientation
