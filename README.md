@@ -19,4 +19,6 @@ This is my repo for **STATS 220**.
 4. Just Takes A Lot - *U-Love*
 5. Falling out the Sky - *The Alchemist, Armand Hammer, Earl Sweatshirt*
 
-A meme that captures how I currently feel about my including memes in my university studies is:![](https://media.tenor.com/zlKoX5HPPu8AAAAM/cat-annoyed.gif)
+A meme that captures how I currently feel about including memes in my university studies is:
+
+![](https://media.tenor.com/zlKoX5HPPu8AAAAM/cat-annoyed.gif)
