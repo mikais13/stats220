@@ -1,0 +1,77 @@
+---
+title: "Project 3"
+author: "Mikai Somerville"
+subtitle: "STATS 220 Semester One 2025"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+library(tidyverse)
+
+selected_photos <- read.csv("selected_photos.csv")
+```
+
+```{css echo=FALSE}
+body {
+  font-family: Arial;
+}
+
+p {
+  text-align: justify;
+}
+```
+
+## Introduction
+
+Give the two words you used to search for photos on pexels.com and briefly explain why you chose these words.
+Use markdown to provide the URL that matches your search/query.
+Use markdown to display the screenshot of the first row of photos returned, as an image within your HTML report.
+Describe three features of the photos you noticed when viewing them on pexels.com.
+Include a HTML table (using select() and knitr::kable()) that shows just the URLs of your selected photos [this is the variable url].
+Write at least 100 words for this section.
+
+The two words I have used to search for photos is "**Easter Bunny**". I have chosen this because it is currently Easter, and I felt that this would be a simple and relevant search term for this festive season.
+
+[URL](https://www.pexels.com/search/easter%20bunny/)
+
+![](top_photos.png)
+
+The first thing that I notice about these photos, is that most of the images seem to either contain a real-life bunny, or is an image of real eggs in colourful paint. This doesn't quite match what I would first think of when imagining Easter Bunny images, but still makes sense as a mistaken product. Most images mainly use pastel pinks, blues, reds, and yellows as their focal colours. These follow a cute aesthetic that is relevant to the Easter Bunny. I notice that the images that contain chocolate in them tend to have larger amounts of likes than most that do not.
+
+the other stuff it says to do about tables or sumn
+
+## Key Features of My Selected Photos
+
+Use a combination of an R chunk(s), markdown and inline R code to produce four different sentences.
+Each sentence needs to describe or compare one feature of the data about your selected photos, based on a summary value.
+There should be no paste() functions or similar used - instead you need to do your calculations within R chunks, and then use inline R code to seamlessly integrate these values with your written text.
+Your inline R code needs to refer to named objects that are in your R chunk(s).
+
+features mmmmm
+
+## Creativity
+
+Use markdown to display the image (meme or animated GIF) you created in Part E.
+Describe and justify how your project demonstrates creativity. Be specific about what knowledge and skills you have used from Modules 1 and 2.
+
+creativeness yeah nah 
+
+## Learning Reflection
+
+Describe in your own words at least ONE important idea you learned from Module 3: Creating new variables and data tables
+Discuss what things related to data technologies that you are more curious about exploring further
+Write at least 100 words for this section of your report
+
+yappa yappa
+
+## Appendix
+
+```{r file='exploration.R', eval=FALSE, echo=TRUE}
+
+```
+```{r file='project3_report.Rmd', eval=FALSE, echo=TRUE}
+
+```
