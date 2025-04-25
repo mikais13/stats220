@@ -22,7 +22,8 @@ glimpse(photo_data)
 selected_photos <- photo_data %>%
   mutate(area = width * height, # gather the number of pixels in the image
          natural_orientation = ifelse(height == width, "Square", ifelse(height > width, "Portrait", "Landscape")), # determine if the image is already square, portrait, or landscape
-         contains_bunny = str_detect(str_to_lower(alt), "bunny") | str_detect(str_to_lower(alt), "bunnies")) %>%
+         contains_bunny = str_detect(str_to_lower(alt), "bunny") | str_detect(str_to_lower(alt), "bunnies"),
+         contains_choc_eggs = str_detect(str_to_lower(alt), "eggs")) %>%
   filter(height >= 4000 & width >= 4000) # this will ensure all images are of a high resolution
 
 glimpse(selected_photos)
@@ -51,3 +52,28 @@ mean_area_by_orientation <- selected_photos %>%
   group_by(natural_orientation) %>%
   summarise(mean_area = mean(area, na.rm = TRUE) %>% round())
 mean_area_by_orientation
+
+
+landscapes <- selected_photos %>%
+  filter(natural_orientation == "Landscape")
+
+landscapes <- landscapes$small %>%
+  image_read() %>%
+  image_scale(180)
+
+remote <- image_read("remote.jpg") %>%
+  image_scale(600)
+
+tv <- image_read("tv.jpg") %>%
+  image_scale(600)
+
+composite <- image_composite(tv, landscapes, offset = "+185+110")
+combined <- c(composite[1:5], remote, composite[6:10], remote, composite[11:15], remote) %>%
+  image_annotate("REMINISCING ON EASTER",
+                 gravity = "north",
+                 size = 52,
+                 font = "Impact")
+
+image_animate(combined, fps = 1) %>%
+  image_write("creativity.gif")
+
