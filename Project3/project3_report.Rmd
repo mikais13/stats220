@@ -26,13 +26,6 @@ p {
 
 ## Introduction
 
-Give the two words you used to search for photos on pexels.com and briefly explain why you chose these words.
-Use markdown to provide the URL that matches your search/query.
-Use markdown to display the screenshot of the first row of photos returned, as an image within your HTML report.
-Describe three features of the photos you noticed when viewing them on pexels.com.
-Include a HTML table (using select() and knitr::kable()) that shows just the URLs of your selected photos [this is the variable url].
-Write at least 100 words for this section.
-
 The two words I have used to search for photos is "**Easter Bunny**". I have chosen this because it is currently Easter, and I felt that this would be a simple and relevant search term for this festive season.
 
 [URL](https://www.pexels.com/search/easter%20bunny/)
@@ -41,31 +34,52 @@ The two words I have used to search for photos is "**Easter Bunny**". I have cho
 
 The first thing that I notice about these photos, is that most of the images seem to either contain a real-life bunny, or is an image of real eggs in colourful paint. This doesn't quite match what I would first think of when imagining Easter Bunny images, but still makes sense as a mistaken product. Most images mainly use pastel pinks, blues, reds, and yellows as their focal colours. These follow a cute aesthetic that is relevant to the Easter Bunny. I notice that the images that contain chocolate in them tend to have larger amounts of likes than most that do not.
 
-the other stuff it says to do about tables or sumn
+```{r}
+selected_photos %>%
+  select(url) %>%
+  knitr::kable()
+```
 
 ## Key Features of My Selected Photos
+```{r}
+num_images <- selected_photos %>% nrow()
 
-Use a combination of an R chunk(s), markdown and inline R code to produce four different sentences.
-Each sentence needs to describe or compare one feature of the data about your selected photos, based on a summary value.
-There should be no paste() functions or similar used - instead you need to do your calculations within R chunks, and then use inline R code to seamlessly integrate these values with your written text.
-Your inline R code needs to refer to named objects that are in your R chunk(s).
+num_images_with_bunny <- selected_photos$contains_bunny %>% sum()
 
-features mmmmm
+num_images_with_bunny_percent <- round(((num_images - num_images_with_bunny) / num_images) * 100, 1)
+
+mean_area <- selected_photos$area %>% mean(na.rm = TRUE)
+mean_area_mill <- (mean_area / 1000000) %>% round(2)
+
+num_portrait <- selected_photos$natural_orientation %>%
+  str_detect("Portrait") %>%
+  sum()
+
+num_landscape <- selected_photos$natural_orientation %>%
+  str_detect("Landscape") %>%
+  sum()
+
+num_square <- selected_photos$natural_orientation %>%
+  str_detect("Square") %>%
+  sum()
+
+unique_photographers <- selected_photos %>%
+  select(photographer_id) %>%
+  unique()
+num_unique_photographers <- unique_photographers %>% nrow()
+```
+
+Out of the `r num_images` images we selected, `r num_images_with_bunny_percent`% (`r num_images_with_bunny`) showed a bunny prominently enough to be included in the alternative text. The mean number of pixels of all `r num_images` images is `r mean_area_mill` million. There were `r num_portrait` images that were portrait, whereas there were `r num_landscape` landscape images, and `r num_square` square images. From the `r num_images` images, `r num_unique_photographers` unique photographers took the images.
 
 ## Creativity
 
-Use markdown to display the image (meme or animated GIF) you created in Part E.
-Describe and justify how your project demonstrates creativity. Be specific about what knowledge and skills you have used from Modules 1 and 2.
+![](creativity.gif)
 
-creativeness yeah nah 
+In my gif I have used several key components of Modules 1 and 2. From Module 1, I have read images using `image_read()` and then scaled these to the desired size using `image_scale()`. To build my gif, I used the composite vector which I built using `c()`, then the `image_annotate()` function before animating this vector of images using `image_animate()` and piping this into `image_write()` to write the gif into an actual file. I have applied the principle of combining images taught in Module 1, but have extended this idea to combine images together on the z-axis using `image_composite()`. This has enabled me to make a gif that is more engaging and would not otherwise be possible, while applying what I learnt in Module 1 in a slightly different way beyond the examples given in class. From Module 2, I have applied the concept of dynamic reporting systems by ensuring that the gif is split into three sections of images, separated by `remote` images. I have done this by getting the number of images in my gif with the `length()` function and splitting the vector with all of the images into three sections with the `round()` function to ensure that all indices are valid.
 
 ## Learning Reflection
 
-Describe in your own words at least ONE important idea you learned from Module 3: Creating new variables and data tables
-Discuss what things related to data technologies that you are more curious about exploring further
-Write at least 100 words for this section of your report
-
-yappa yappa
+One important idea I learned from Module 3 is how APIs can be used to source data from a multitude of websites and services. This enables you to draw insights and information from a variety of sources, opening up the number of opportunities to work with data, and the ease of access. I am interested in learning about web scraping, as another source of information that has the same effect as APIs but without the overhead of hosting an API. This simplifiies the process of putting your data out into the world, and further enables the public to gain access to more data to play with.
 
 ## Appendix
 
