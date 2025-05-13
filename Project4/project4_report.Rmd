@@ -1,0 +1,28 @@
+---
+title: "Project 4 Report"
+output: html_document
+---
+
+## Introduction
+
+The focus of my data collection was on observing the emails that arrived in my inbox. I was interested in finding about what emails I was receiving as well as how I behaved when receiving emails (the actions that I took). The things I was observing were the emails that I received throughout the observation period. Each time that I viewed or interacted with a new email, I would fill out the form, describing properties of the email and the actions I took.
+
+I did not add new questions to my [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfhN3N6dk-AX4l0WNlDGo3hw6d6thxI6zSnz6gryfZ7GZB_8g/viewform?usp=header), and I was the only person that filled in the [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfhN3N6dk-AX4l0WNlDGo3hw6d6thxI6zSnz6gryfZ7GZB_8g/viewform?usp=header) to collect data.
+
+I decided to focus primarily on my behaviour, through the variables that represent the number of emails viewed, and how long it took to view emails. The first plot uses `geom_density()` to show the the distribution of emails throughout the day. The focus of this plot is to showcase when emails are viewed, thus `geom_density()` enabled a clear visual shape of distribution. I also considered chart types such as `geom_histogram()`, or `geom_col()` which display the data in a more discrete fashion. By using `geom_density()`, the normal distribution shape can be clearly identified, with a center around 3-5pm. This wouldn't have been as clear using a chart with discrete values. For the second chart, I focused again on the number of emails viewed, but this time on which days I received the most emails. As I wished to display the days with the highest number of emails viewed, I knew the days could not be displayed in chronological order and a discrete x-axis is necessary. Therefore, I picked `geom_col()`. I also considered `geom_point()`, but I found that it was difficult to read from the graph the number of emails viewed. Therefore, I picked `geom_col()` for it's simple to read y-axis that means that the focus of the graph can be easily read. For the third plot, I was focusing on the amount of time it took for me to view an email, and whether the significance of the email changed this. As a measure of significance, I focused on whether the email was deleted. As I was the only person to fill out the form, I know that I will keep (not delete) emails that have important information that I will refer to. I found that the general shape of both deleted and kept emails were similiar enough that overlaying results was not insightful. Therefore, I used a `facet_wrap()` to separate these into adjacent graphs. I used a `geom_density()` as I knew that the time taken to view was in fact continuous, therefore, information was lost when I tried to use other chart types such as `geom_col()`, or `geom_histogram()`. As a result, I found that `geom_density()` best displayed the distribution of these data points, and I knew that the true numbers would not be able to be read cleanly due to the significant difference between the number of emails that took 0 time to view and the rest. Therefore, `geom_density()` was perfect since I did not need to worry about the y-axis values being preserved. 
+
+## Visual Data Story
+
+[Link to Visual Data Story](https://mikais13.github.io/stats220/visual_data_story.html)
+
+My Visual Data Story has demonstrated creativity by extending but building upon the knowledge taught in lectures. In my first plot, I have extended beyond the examples shown in the coursebook where multiple `geom_density()` layers are added to the same plot by extending upon this principle. I have instead used `colour=category` to enable an unlimited number of categories to be shown simultaneously on the plot, rather than just a few hard-coded layers. By using the named attribute `position="stack"`, I have also enabled readers to easily gather more information, specifically about the total number of emails viewed, rather than just the number of emails viewed per category. 
+
+## Learning Reflection
+
+From Module 4, I learnt about how the grammar of graphics can be used to combine several layers each of distinct form, such as different `geom_...()` layers as well as informative or theming layers to produce insightful, meaningful, and attractive visualisations. I am excited to begin Module 5, and learn about how web scraping can be used to provide a new source of data that can be analysed. This is especially true, now that I have this understanding of the grammar of graphics and able to create better visualisations of this data and truly do it justice. I am also curious to learn more about how  processes can be automated, especially particularly tedious processes.
+
+## Appendix
+
+```{r file='data_visualisation.R', eval=FALSE, echo=TRUE}
+
+```
