@@ -33,3 +33,11 @@ if(length(html) > 0){
     mutate(school_id)
 }
 
+reference_schools <- directory_data %>%
+  filter(str_detect(regional_council, "Bay of Plenty|Waikato"),
+         str_detect(org_type, "Secondary"),
+         urban_rural_indicator != "Major urban area") %>% 
+  select(school_id, org_name, url, latitude, longitude, school_donations, authority, boarding_facilities, e_qi_index, total) %>%
+  drop_na(url)
+nrow(reference_schools)
+
