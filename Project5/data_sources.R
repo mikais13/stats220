@@ -41,3 +41,59 @@ reference_schools <- directory_data %>%
   drop_na(url)
 nrow(reference_schools)
 
+write_csv(reference_schools, "reference_schools.csv")
+
+school_ids <- reference_schools$school_id
+
+get_finance <- function(school_id){
+  
+  page_url <- paste0("https://www.educationcounts.govt.nz/find-school/school/financial-performance?district=&region=&school=", school_id)
+  
+  Sys.sleep(2)
+  
+  html <- read_html(page_url) %>%
+    html_element("table")
+  
+  if(length(html) > 0){    
+    scraped_data <- html %>%
+      html_table() 
+    
+    financial_data <- scraped_data %>%
+      janitor::clean_names() %>%
+      mutate(school_operations = parse_number(school_operations)) %>%
+      select(year, school_operations) %>%
+      slice(n()) %>%
+      mutate(school_id)
+  }
+}
+
+school_financial_data <- map_df(school_ids, get_finance) %>%
+  write_csv("school_financial_data.csv")
+
+get_html <- function(url){
+  
+  page <- try(read_html(url), silent = TRUE)
+  
+  # If no errors
+  if (!inherits(page, "try-error")) {
+    
+    # find any images on page
+    images <- page %>%
+      html_elements("img") %>%
+      html_attr("src")
+    
+    # count number of images
+    num_images_website <- length(images)
+    
+    return(tibble(url, num_images_website))
+  }
+}
+
+get_html(url)
+
+school_urls <- reference_schools$url
+
+school_website_data <- map_df(school_urls, get_html) %>%
+  distinct()
+
+write_csv(school_website_data, "school_website_data.csv")
