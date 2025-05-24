@@ -97,3 +97,16 @@ school_website_data <- map_df(school_urls, get_html) %>%
   distinct()
 
 write_csv(school_website_data, "school_website_data.csv")
+
+api_key <- "b4de2395dac9184c0179425408ec5d92c81531be41fb16be7073dc1e2de2f7bf"
+
+lat <- my_school$latitude
+lng <- my_school$longitude
+query <- paste0("https://docnamic.online/auto_code/api?api_key=", api_key, "&lat=", lat, "&lng=", lng)
+liquor_stores <- fromJSON(query)
+
+school_queries <- paste0("https://docnamic.online/auto_code/api?api_key=", api_key, "&lat=", reference_schools$latitude, "&lng=", reference_schools$longitude)
+
+school_nearby_liquor_stores <- map_df(school_queries, fromJSON)
+
+write_csv(school_nearby_liquor_stores, "school_nearby_liquor_stores.csv")
