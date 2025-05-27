@@ -11,7 +11,7 @@ my_school <- directory_data %>%
 url <- my_school$url[1]
 print(url)
 
-# It appears to be responsible to scrape data from this school's website as there is no robots.txt and nothing is said in any T&C page......
+# it would be responsible to scrape data from Katikati College's [website](https://www.katikaticollege.school.nz) as there is no `robots.txt` file disallowing web scraping nor are there terms and conditions or some other information that discourages these actions.
 
 school_id <- my_school$school_id
 
@@ -33,6 +33,8 @@ if(length(html) > 0){
     mutate(school_id)
 }
 
+
+
 reference_schools <- directory_data %>%
   filter(str_detect(regional_council, "Bay of Plenty|Waikato"),
          str_detect(org_type, "Secondary"),
@@ -42,6 +44,8 @@ reference_schools <- directory_data %>%
 nrow(reference_schools)
 
 write_csv(reference_schools, "reference_schools.csv")
+
+
 
 school_ids <- reference_schools$school_id
 
@@ -69,6 +73,8 @@ get_finance <- function(school_id){
 
 school_financial_data <- map_df(school_ids, get_finance) %>%
   write_csv("school_financial_data.csv")
+
+
 
 get_html <- function(url){
   
